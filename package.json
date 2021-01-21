@@ -1,0 +1,19 @@
+{
+  "name": "artist-mashup-api",
+  "version": "1.0.0",
+  "description": "A Restful API mashup, using four different API's to get information about a certain artist",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Joacim Thenander",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
