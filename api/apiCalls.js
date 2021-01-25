@@ -1,7 +1,7 @@
 'use strict'
 
 const axios = require('axios')
-const getValueByKeyRecursively = require('../utils/getValueByKeyRecursively')
+const { getValueByKeyRecursively } = require('../utils')
 
 const MUSIC_BRAINZ_API = 'http://musicbrainz.org/ws/2'
 const WIKIDATA_API = 'https://www.wikidata.org/w/api.php'

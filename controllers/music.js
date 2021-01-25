@@ -1,9 +1,11 @@
 'use strict'
 
 const apiCalls = require('../api/apiCalls')
-const setPageAndLimitFromQuery = require('../utils/setPageAndLimitFromQuery')
-const extractObjectFromList = require('../utils/extractObjectFromList')
-const paginate = require('../utils/pagination')
+const {
+  setPageAndLimitFromQuery,
+  extractObjectFromList,
+  paginate,
+} = require('../utils')
 
 /**
  * @param {Array} arr
