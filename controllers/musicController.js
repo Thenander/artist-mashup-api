@@ -3,9 +3,9 @@
 const apiCalls = require('../api/apiCalls')
 const {
   setPageAndLimitFromQuery,
-  extractObjectFromList,
-  paginate,
-} = require('../utils')
+} = require('../utils/setPageAndLimitFromQuery')
+const extractObjectFromList = require('../utils/extractObjectFromList')
+const paginate = require('../utils/pagination')
 
 /**
  * @param {Array} arr
@@ -94,6 +94,18 @@ exports.getArtistByMbId = async (req, res, next) => {
 }
 
 exports.getInformation = async (req, res, next) => {
+  try {
+    res.status(200).json({
+      message:
+        'To search the "Music artist mashup API", add an MBID (MusicBrainz Identifier). \n Ex: /music/artist/5700dcd4-c139-4f31-aa3e-6382b9af9032',
+    })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
+exports.getIndex = async (req, res, next) => {
   try {
     res.status(200).json({
       message:

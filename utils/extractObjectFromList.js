@@ -6,16 +6,9 @@
  * @returns {object}
  */
 module.exports = function extractObjectFromList(list, searchObj) {
-  const keys = Object.keys(searchObj)
+  const key = Object.keys(searchObj)[0]
   try {
-    let found = null
-    for (const key of keys) {
-      found = list.find(obj => obj[key] === searchObj[key])
-      if (found) {
-        break
-      }
-    }
-    return found
+    return list.find(obj => obj[key] === searchObj[key]) || null
   } catch (error) {
     console.log(error)
     throw error

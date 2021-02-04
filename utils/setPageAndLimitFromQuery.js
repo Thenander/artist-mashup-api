@@ -1,17 +1,22 @@
 'use strict'
 
-module.exports = function setPageAndLimitFromQuery(query) {
-  const MAX_ITEMS_PER_PAGE = 100
-  const DEFAULT_ITEMS_PER_PAGE = 25
+const MAX_ITEMS_PER_PAGE = 100
+const DEFAULT_ITEMS_PER_PAGE = 25
 
+function ensureItemsAreBelowMax(items) {
+  if (Number.isInteger(items)) {
+    if ((items < 100) & (items > 0)) {
+      return items
+    }
+  }
+  return MAX_ITEMS_PER_PAGE
+}
+
+function setPageAndLimitFromQuery(query) {
   let page
   let limit
 
   try {
-    const ensureItemsAreBelowMax = items =>
-      isNaN(items) || items > MAX_ITEMS_PER_PAGE ? MAX_ITEMS_PER_PAGE : items
-
-    // return object
     if (query) {
       const pageLimit = Number(query.limit)
       page = Number(query.page) || 1
@@ -28,3 +33,5 @@ module.exports = function setPageAndLimitFromQuery(query) {
     throw error
   }
 }
+
+module.exports = { ensureItemsAreBelowMax, setPageAndLimitFromQuery }
