@@ -20,7 +20,6 @@ const getAllCoverArtUrls = async arr => {
         obj.image = await apiCalls.getSingleCoverArtUrl(obj.id)
         return obj
       } catch (error) {
-        console.log('controllers: music: getAllCoverArtUrls', error)
         throw error
       }
     })
@@ -47,7 +46,6 @@ const getAlbumInformation = releases => {
     const completeAlbumInformation = getAllCoverArtUrls(res)
     return completeAlbumInformation
   } catch (error) {
-    console.log(error)
     throw error
   }
 }
@@ -55,6 +53,7 @@ const getAlbumInformation = releases => {
 // Controllers
 exports.getArtistByMbId = async (req, res, next) => {
   log.info({
+    message: 'request',
     method: req.method,
     originalUrl: req.originalUrl,
     params: req.params,
@@ -78,13 +77,13 @@ exports.getArtistByMbId = async (req, res, next) => {
     const description = await apiCalls.getArtistInfoFromWikipediaByName(
       artistSearchName
     )
-    const artistReleases = await apiCalls.getArtistReleasesById(
-      mbid,
-      limit,
-      page
-    )
-    const totalReleasesCount = artistReleases['release-group-count']
-    const albums = await getAlbumInformation(artistReleases['release-groups'])
+    const artistReleases = limit
+      ? await apiCalls.getArtistReleasesById(mbid, limit, page)
+      : {}
+    const totalReleasesCount = artistReleases['release-group-count'] || 0
+    const albums = totalReleasesCount
+      ? await getAlbumInformation(artistReleases['release-groups'])
+      : []
     const pagination = paginate(totalReleasesCount, page, limit)
     const result = {
       mbid,
@@ -94,12 +93,12 @@ exports.getArtistByMbId = async (req, res, next) => {
       pagination,
     }
 
-    log.info({ statusCode: 200 })
+    log.info({ message: 'response', statusCode: 200, response: result })
 
     res.status(200).json(result)
   } catch (error) {
-    error.statusCode = 500
-    log.error('Server error', error)
+    error.statusCode = error.statusCode || 500
+    log.error(error)
     next(error)
   }
 }
@@ -117,12 +116,6 @@ exports.getArtists = (req, res, next) => {
 }
 
 exports.getMusicIndex = (req, res, next) => {
-  log.info({
-    method: req.method,
-    originalUrl: req.originalUrl,
-    params: req.params,
-    query: req.query,
-  })
   try {
     res.status(200).json({
       message:

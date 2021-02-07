@@ -2,6 +2,9 @@
 
 const axios = require('axios')
 const { getValueByKeyRecursively } = require('../utils')
+const Log = require('../server/Log')
+
+const log = new Log()
 
 const MUSIC_BRAINZ_API = 'http://musicbrainz.org/ws/2'
 const WIKIDATA_API = 'https://www.wikidata.org/w/api.php'
@@ -30,7 +33,7 @@ const getImageUrl = images => {
     }
     return ''
   } catch (error) {
-    console.log('apiCalls: getImageUrl', error)
+    throw error
   }
 }
 
@@ -47,15 +50,14 @@ exports.getSingleCoverArtUrl = async id => {
     const result = getImageUrl(res.data.images)
     return result
   } catch (error) {
-    const coverArtUrl = error.response.config.url
-    if (coverArtUrl) {
-      if (coverArtUrl.startsWith('http://coverartarchive.org')) {
-        return ''
-      }
+    let err
+    if (error.isAxiosError) {
+      err = new Error(error.response.statusText)
+      err.statusCode = error.response.status
+    } else {
+      err = new Error('Unknown error')
+      err.statusCode = 500
     }
-    const err = new Error(error.response.statusText)
-    err.statusCode = error.response.status
-    console.log('apiCalls: getSingleCoverArtUrl', err)
     throw err
   }
 }
@@ -77,7 +79,6 @@ exports.getArtistInfoAndRelationsById = async id => {
   } catch (error) {
     const err = new Error(error.response.statusText)
     err.statusCode = error.response.status
-    console.log('apiCalls: getArtistInfoAndRelationsById', err)
     throw err
   }
 }
@@ -100,8 +101,9 @@ exports.getArtistReleasesById = async (id, limit, page) => {
     const res = await axios.get(url, OPTIONS)
     return res.data
   } catch (error) {
-    console.log('apiCalls: getArtistReleasesById', error)
-    throw error
+    const err = new Error(error.response.statusText)
+    err.statusCode = error.response.status
+    throw err
   }
 }
 
@@ -128,8 +130,9 @@ exports.getWikipediaSearchStringById = async id => {
     const { enwiki } = res.data.entities[id].sitelinks
     return enwiki ? enwiki.title : null
   } catch (error) {
-    console.log('apiCalls: getWikipediaSearchStringById', error)
-    throw error
+    const err = new Error(error.response.statusText)
+    err.statusCode = error.response.status
+    throw err
   }
 }
 
@@ -155,7 +158,8 @@ exports.getArtistInfoFromWikipediaByName = async name => {
     const artistInfo = getValueByKeyRecursively(res.data.query, 'extract') || ''
     return artistInfo
   } catch (error) {
-    console.log('apiCalls: getArtistInfoFromWikipediaByName', error)
-    throw error
+    const err = new Error(error.response.statusText)
+    err.statusCode = error.response.status
+    throw err
   }
 }

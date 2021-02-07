@@ -4,10 +4,17 @@ const MAX_ITEMS_PER_PAGE = 100
 const DEFAULT_ITEMS_PER_PAGE = 25
 
 function ensureItemsAreBelowMax(items) {
+  if (Math.sign(items) < 0) {
+    return 0
+  }
   if (Number.isInteger(items)) {
-    if ((items < 100) & (items > 0)) {
+    if (items < 1) {
+      return 0
+    } else if (items < 100 && items > 0) {
       return items
     }
+  } else {
+    return DEFAULT_ITEMS_PER_PAGE
   }
   return MAX_ITEMS_PER_PAGE
 }

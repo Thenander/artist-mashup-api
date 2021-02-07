@@ -87,9 +87,9 @@ describe('Utils', () => {
       expect(ensureItemsAreBelowMax).toBeFunction()
     })
 
-    test('when used without argument - returns 100', () => {
+    test('when used without argument - returns 25', () => {
       // Arrange
-      const expected = 100
+      const expected = 25
 
       // Act
       const actual = ensureItemsAreBelowMax()
@@ -110,9 +110,9 @@ describe('Utils', () => {
       expect(actual).toEqual(expected)
     })
 
-    test('when used with string as argument - returns 100', () => {
+    test('when used with string as argument - returns 25', () => {
       // Arrange
-      const expected = 100
+      const expected = 25
       const arg = 'test'
 
       // Act
@@ -134,9 +134,9 @@ describe('Utils', () => {
       expect(actual).toEqual(expected)
     })
 
-    test('when used with an object arg - returns 100', () => {
+    test('when used with an object arg - returns 25', () => {
       // Arrange
-      const expected = 100
+      const expected = 25
       const arg = { num: 2214 }
 
       // Act
@@ -149,10 +149,11 @@ describe('Utils', () => {
     describe('- when used with invalid arguments...', () => {
       // Arrange
       const _getTestDataListForNumbers = () => {
-        const n = 100
+        const n = 25
         const cases = [
+          [-50, 0],
           [50, 50],
-          [150, n],
+          [150, 100],
           ['', n],
           [{}, n],
           [[], n],

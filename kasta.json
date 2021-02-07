@@ -1,0 +1,44 @@
+{
+  "level": 30,
+  "time": 1612729152519,
+  "pid": 10972,
+  "hostname": "Joacims-MacBook-Pro.local",
+  "req": {
+    "id": 1,
+    "method": "GET",
+    "url": "/music/artists/5700dcd4-c139-4f31-aa3e-6382b9af9032",
+    "headers": {
+      "host": "localhost:3001",
+      "connection": "keep-alive",
+      "cache-control": "max-age=0",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+      "sec-fetch-site": "none",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-user": "?1",
+      "sec-fetch-dest": "document",
+      "accept-encoding": "gzip, deflate, br",
+      "accept-language": "sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7,la;q=0.6",
+      "cookie": "_ga=GA1.1.232630538.1601977513"
+    },
+    "remoteAddress": "::1",
+    "remotePort": 60489
+  },
+  "res": {
+    "statusCode": 707,
+    "headers": {
+      "x-powered-by": "Express",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "22",
+      "etag": "W/\"16-WFQZyf0pSaMIR9XIejp15HRPqjM\""
+    }
+  },
+  "err": {
+    "type": "Error",
+    "message": "failed with status code 707",
+    "stack": "Error: failed with status code 707\n    at ServerResponse.onResFinished (/Users/microlabmacbook/Documents/cygni/artist-mashup-api/node_modules/pino-http/logger.js:73:38)\n    at ServerResponse.emit (events.js:323:22)\n    at onFinish (_http_outgoing.js:730:10)\n    at onCorkedFinish (_stream_writable.js:721:5)\n    at afterWrite (_stream_writable.js:528:5)\n    at afterWriteTick (_stream_writable.js:515:10)\n    at processTicksAndRejections (internal/process/task_queues.js:83:21)"
+  },
+  "responseTime": 1911,
+  "msg": "request errored"
+}
