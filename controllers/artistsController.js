@@ -12,7 +12,7 @@ const paginate = require('../utils/pagination')
  * @returns {Array}
  */
 const getAllCoverArtUrls = async arr => {
-  return await Promise.all(
+  return Promise.all(
     arr.map(async obj => {
       try {
         obj.image = await apiCalls.getSingleCoverArtUrl(obj.id)
@@ -29,7 +29,7 @@ const getAllCoverArtUrls = async arr => {
  * @param {Array} releases
  * @returns {Promise}
  */
-const getAlbumInformation = async releases => {
+const getAlbumInformation = releases => {
   let res = []
   try {
     for (let i = 0; i < releases.length; i++) {
@@ -93,11 +93,11 @@ exports.getArtistByMbId = async (req, res, next) => {
   }
 }
 
-exports.getInformation = async (req, res, next) => {
+exports.getArtists = (req, res, next) => {
   try {
     res.status(200).json({
       message:
-        'To search the "Music artist mashup API", add an MBID (MusicBrainz Identifier). \n Ex: /music/artist/5700dcd4-c139-4f31-aa3e-6382b9af9032',
+        'No artists to display. Try to search individual artists by adding an MBID (MusicBrainz Identifier). \n Ex: /music/artists/5700dcd4-c139-4f31-aa3e-6382b9af9032',
     })
   } catch (error) {
     console.log(error)
@@ -105,11 +105,11 @@ exports.getInformation = async (req, res, next) => {
   }
 }
 
-exports.getIndex = async (req, res, next) => {
+exports.getMusicIndex = (req, res, next) => {
   try {
     res.status(200).json({
       message:
-        'To search the "Music artist mashup API", add an MBID (MusicBrainz Identifier). \n Ex: /music/artist/5700dcd4-c139-4f31-aa3e-6382b9af9032',
+        'To search the "Music artist mashup API", add an MBID (MusicBrainz Identifier). \n Ex: /music/artists/5700dcd4-c139-4f31-aa3e-6382b9af9032',
     })
   } catch (error) {
     console.log(error)

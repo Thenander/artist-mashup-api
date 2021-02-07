@@ -39,7 +39,7 @@ The API's used in **Music artist mashup API** are
 
    The server will use port 3001
 
-5. Start your browser and go to this URL: http://localhost:3001/music/artist
+5. Start your browser and go to this URL: http://localhost:3001/music/artists
 
 ### Endpoints
 
@@ -53,13 +53,13 @@ The `mbid` is an identifier used by MusicBrainz to find the relevant and correct
 
 Here are a few examples of searches that you can do on the **Music artist mashup API**:
 
-- [David Bowie](http://localhost:3001/music/artist/5441c29d-3602-4898-b1a1-b77fa23b8e50), 5441c29d-3602-4898-b1a1-b77fa23b8e50
+- [David Bowie](http://localhost:3001/music/artists/5441c29d-3602-4898-b1a1-b77fa23b8e50), 5441c29d-3602-4898-b1a1-b77fa23b8e50
 
-- [Aretha Franklin](http://localhost:3001/music/artist/2f9ecbed-27be-40e6-abca-6de49d50299e), 2f9ecbed-27be-40e6-abca-6de49d50299e
+- [Aretha Franklin](http://localhost:3001/music/artists/2f9ecbed-27be-40e6-abca-6de49d50299e), 2f9ecbed-27be-40e6-abca-6de49d50299e
 
-- [Coldplay](http://localhost:3001/music/artist/cc197bad-dc9c-440d-a5b5-d52ba2e14234), cc197bad-dc9c-440d-a5b5-d52ba2e14234
+- [Coldplay](http://localhost:3001/music/artists/cc197bad-dc9c-440d-a5b5-d52ba2e14234), cc197bad-dc9c-440d-a5b5-d52ba2e14234
 
-- [Public Enemy](http://localhost:3001/music/artist/bf2e15d0-4b77-469e-bfb4-f8414415baca), bf2e15d0-4b77-469e-bfb4-f8414415baca
+- [Public Enemy](http://localhost:3001/music/artists/bf2e15d0-4b77-469e-bfb4-f8414415baca), bf2e15d0-4b77-469e-bfb4-f8414415baca
 
 The return from the API will be a json object, that looks something like this (but with information instead of dots):
 
@@ -98,8 +98,8 @@ Add `page={number}` and `limit={number}` that suits your needs.
 
 _If no page or limit parameter is sent the default will be `page=1` and `limit=25`._
 
-Example [link](http://localhost:3001/music/artist/5700dcd4-c139-4f31-aa3e-6382b9af9032?limit=5&page=2):
-`http://localhost:3001/music/artist/5700dcd4-c139-4f31-aa3e-6382b9af9032?limit=5&page=2`
+Example [link](http://localhost:3001/music/artists/5700dcd4-c139-4f31-aa3e-6382b9af9032?limit=5&page=2):
+`http://localhost:3001/music/artists/5700dcd4-c139-4f31-aa3e-6382b9af9032?limit=5&page=2`
 
 ## Reflections
 
