@@ -1,0 +1,71 @@
+'use strict'
+
+const { getResponseTime } = require('../utils')
+
+const reset = '\x1b[0m'
+const bright = '\x1b[1m'
+const dim = '\x1b[2m'
+const underscore = '\x1b[4m'
+const blink = '\x1b[5m'
+const reverse = '\x1b[7m'
+const hidden = '\x1b[8m'
+
+// Foreground colors
+const black = '\x1b[30m%s\x1b[0m' // with reset
+const red = '\x1b[31m%s\x1b[0m' // with reset
+const green = '\x1b[32m%s\x1b[0m' // with reset
+const yellow = '\x1b[33m%s\x1b[0m' // with reset
+const blue = '\x1b[34m%s\x1b[0m' // with reset
+const magenta = '\x1b[35m%s\x1b[0m' // with reset
+const cyan = '\x1b[36m%s\x1b[0m' // with reset
+const white = '\x1b[37m%s\x1b[0m' // with reset
+
+// Background colors
+const bgBlack = '\x1b[40m'
+const bgRed = '\x1b[41m'
+const bgGreen = '\x1b[42m'
+const bgYellow = '\x1b[43m'
+const bgBlue = '\x1b[44m'
+const bgMagenta = '\x1b[45m'
+const bgCyan = '\x1b[46m'
+const bgWhite = '\x1b[47m'
+
+// ********************************
+// let startTime = 0
+// let stopTime = 0
+
+// const _stopWatch = date => {
+//   let elapsedTime = 0
+
+//   if (startTime === 0) startTime = date
+//   else stopTime = date
+
+//   if (startTime !== 0 && stopTime !== 0) {
+//     elapsedTime = stopTime - startTime
+//     startTime = 0
+//     stopTime = 0
+//   }
+//   return elapsedTime
+// }
+// // ********************************
+
+// const getResponseTime = date => {
+//   const elapsed = _stopWatch(date)
+//   return elapsed ? `Server response time: ${elapsed} ms` : ''
+// }
+
+// ********************************
+
+module.exports = class Log {
+  constructor() {}
+  error = (msg, obj) => {
+    const date = new Date()
+    console.log(red, `ERROR : [${date}]`, msg, obj)
+  }
+
+  info = obj => {
+    const date = new Date()
+    const time = getResponseTime(date)
+    console.log(blue, `[${date}]`, obj, time)
+  }
+}

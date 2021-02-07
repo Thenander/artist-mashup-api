@@ -6,6 +6,8 @@ const {
 } = require('../utils/setPageAndLimitFromQuery')
 const extractObjectFromList = require('../utils/extractObjectFromList')
 const paginate = require('../utils/pagination')
+const Log = require('../server/Log')
+const log = new Log()
 
 /**
  * @param {Array} arr
@@ -52,6 +54,12 @@ const getAlbumInformation = releases => {
 
 // Controllers
 exports.getArtistByMbId = async (req, res, next) => {
+  log.info({
+    method: req.method,
+    originalUrl: req.originalUrl,
+    params: req.params,
+    query: req.query,
+  })
   const OBJECT_TO_FIND = { type: 'wikidata' }
   const URL_TO_REMOVE = 'https://www.wikidata.org/wiki/'
   const { mbid } = req.params
@@ -86,9 +94,12 @@ exports.getArtistByMbId = async (req, res, next) => {
       pagination,
     }
 
+    log.info({ statusCode: 200 })
+
     res.status(200).json(result)
   } catch (error) {
-    console.log(error)
+    error.statusCode = 500
+    log.error('Server error', error)
     next(error)
   }
 }
@@ -106,6 +117,12 @@ exports.getArtists = (req, res, next) => {
 }
 
 exports.getMusicIndex = (req, res, next) => {
+  log.info({
+    method: req.method,
+    originalUrl: req.originalUrl,
+    params: req.params,
+    query: req.query,
+  })
   try {
     res.status(200).json({
       message:
