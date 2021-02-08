@@ -13,7 +13,7 @@ const log = new Log()
  * @param {Array} arr
  * @returns {Array}
  */
-const getAllCoverArtUrls = async arr => {
+const getAllCoverArtUrls = arr => {
   return Promise.all(
     arr.map(async obj => {
       try {
