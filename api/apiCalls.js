@@ -18,17 +18,24 @@ const OPTIONS = {
   },
 }
 
+const _isIterable = obj => {
+  if (obj === null || obj === undefined) {
+    return false
+  }
+  return typeof obj[Symbol.iterator] === 'function'
+}
+
 /**
  * @param {Array} images
  * @returns {string} url or empty string
  */
 const getImageUrl = images => {
   try {
-    if (!images) return ''
-
-    for (const element of images) {
-      if (element.front) {
-        return element.image
+    if (_isIterable(images)) {
+      for (const element of images) {
+        if (element.front) {
+          return element.image ? element.image : ''
+        }
       }
     }
     return ''
@@ -41,7 +48,7 @@ const getImageUrl = images => {
  * @param {string} id
  * @returns {Promise}
  */
-exports.getSingleCoverArtUrl = async id => {
+const getSingleCoverArtUrl = async id => {
   const releaseGroup = 'release-group'
   const url = COVER_ART_ARCHIVE_API + '/' + releaseGroup + '/' + id
 
@@ -54,6 +61,9 @@ exports.getSingleCoverArtUrl = async id => {
     if (error.isAxiosError) {
       err = new Error(error.response.statusText)
       err.statusCode = error.response.status
+      if (err.statusCode === 404) {
+        return null
+      }
     } else {
       err = new Error('Unknown error')
       err.statusCode = 500
@@ -66,7 +76,7 @@ exports.getSingleCoverArtUrl = async id => {
  * @param {string} id
  * @returns {Promise}
  */
-exports.getArtistInfoAndRelationsById = async id => {
+const getArtistInfoAndRelationsById = async id => {
   const jsonFormat = 'fmt=json'
   const urlRelations = 'inc=url-rels'
   const queryString = [jsonFormat, urlRelations].join('&')
@@ -87,7 +97,7 @@ exports.getArtistInfoAndRelationsById = async id => {
  * @param {string} id
  * @returns {Promise}
  */
-exports.getArtistReleasesById = async (id, limit, page) => {
+const getArtistReleasesById = async (id, limit, page) => {
   const calculateOffset = (page - 1) * limit
   const jsonFormat = 'fmt=json'
   const pageLimit = 'limit=' + limit
@@ -111,7 +121,7 @@ exports.getArtistReleasesById = async (id, limit, page) => {
  * @param {string} id
  * @returns {Promise}
  */
-exports.getWikipediaSearchStringById = async id => {
+const getWikipediaSearchStringById = async id => {
   const action = 'action=wbgetentities'
   const wikiId = 'ids=' + id
   const format = 'format=json'
@@ -140,7 +150,7 @@ exports.getWikipediaSearchStringById = async id => {
  * @param {string} name
  * @returns {Promise}
  */
-exports.getArtistInfoFromWikipediaByName = async name => {
+const getArtistInfoFromWikipediaByName = async name => {
   const action = 'action=query'
   const exintro = 'exintro=true'
   const format = 'format=json'
@@ -162,4 +172,13 @@ exports.getArtistInfoFromWikipediaByName = async name => {
     err.statusCode = error.response.status
     throw err
   }
+}
+
+module.exports = {
+  getImageUrl,
+  getSingleCoverArtUrl,
+  getArtistInfoAndRelationsById,
+  getArtistReleasesById,
+  getWikipediaSearchStringById,
+  getArtistInfoFromWikipediaByName,
 }
